@@ -1,0 +1,19 @@
+<div class="login-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <h2>Login</h2>
+
+    <div class="input-container">
+      <label for="email">Email</label>
+      <input type="email" id="email" formControlName="email" placeholder="Enter your email">
+      <app-text-error *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" [control]="loginForm.get('email')"></app-text-error>
+    </div>
+
+    <div class="input-container">
+      <label for="password">Password</label>
+      <input type="password" id="password" formControlName="password" placeholder="Enter your password">
+      <app-text-error *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" [control]="loginForm.get('password')"></app-text-error>
+    </div>
+
+    <button type="submit" [disabled]="loginForm.invalid">Login</button>
+  </form>
+</div>

@@ -1,0 +1,5 @@
+<div *ngIf="control?.invalid && (control?.touched || control?.dirty)" class="invalid-feedback">
+    <div *ngIf="control?.errors?.['required'] && control?.value?.length === 0">To pole jest wymagane.</div>
+    <div *ngIf="control?.errors?.['minlength'] && control?.value?.length > 0">Hasło musi mieć przynajmniej 6 znaków.</div>
+    <div *ngIf="control?.errors?.['invalidEmail'] && control?.value?.length > 0">Proszę podać poprawny adres e-mail.</div>
+  </div>
