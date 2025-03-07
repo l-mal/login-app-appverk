@@ -7,15 +7,15 @@ export class SessionService {
 
   private tokenKey = 'authToken';
 
-  getToken(): string | null {
+  public getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
   }
 
-  saveToken(token: string): void {
+  public saveToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
   }
 
-  removeToken(): void {
+  public removeToken(): void {
     localStorage.removeItem(this.tokenKey);
   }
 }

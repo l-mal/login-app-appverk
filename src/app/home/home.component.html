@@ -1,1 +1,15 @@
-<p>home works!</p>
+<div class="container">
+    <div class="welcome">
+      <h1>Witaj, {{ user.firstName }}!</h1>
+      <p>Oto Twój profil:</p>
+    </div>
+  
+    <div class="user-profile">
+      <p><strong>Imię:</strong> {{ user.firstName }}</p>
+      <p><strong>Nazwisko:</strong> {{ user.lastName }}</p>
+      <p><strong>Email:</strong> {{ user.email }}</p>
+    </div>
+  
+    <button class="logout-btn" (click)="logout()">Logout</button>
+  </div>
+  

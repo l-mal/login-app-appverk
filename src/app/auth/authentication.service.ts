@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { of, Observable } from 'rxjs';
-import { delay } from 'rxjs/operators';
 import { SessionService } from './session.service';
 
 @Injectable({
@@ -10,18 +8,28 @@ export class AuthenticationService {
 
   constructor(private sessionService: SessionService) {}
 
-  login(email: string, password: string): Observable<string> {
-    if (email === 'test@example.com' && password === 'password') {
-      return of('random-token-12345').pipe(delay(500)); 
+  public login(email: string, password: string): void {
+    if (email && password) {
+      this.sessionService.saveToken(this.generateRandomToken());
     }
-    return of('').pipe(delay(500));
   }
 
-  isAuthenticated(): boolean {
-    return !!this.sessionService.getToken();
+  public isAuthenticated(): boolean {
+    const token = this.sessionService.getToken();
+    return token != null && token !== '';
   }
 
-  logout() {
+  public logout() {
     this.sessionService.removeToken();
+  }
+
+  private generateRandomToken(): string {
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let token = '';
+    for (let i = 0; i < 8; i++) {
+      const randomIndex = Math.floor(Math.random() * charset.length);
+      token += charset[randomIndex];
+    }
+    return token;
   }
 }
