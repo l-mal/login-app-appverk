@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { SessionService } from './session.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor(private sessionService: SessionService) {}
+  constructor(private sessionService: SessionService, private router: Router) {}
 
   public login(email: string, password: string): void {
     if (email && password) {
       this.sessionService.saveToken(this.generateRandomToken());
+      this.router.navigate(['/home']);
     }
   }
 
@@ -21,6 +23,7 @@ export class AuthenticationService {
 
   public logout() {
     this.sessionService.removeToken();
+    this.router.navigate(['/login']);
   }
 
   private generateRandomToken(): string {

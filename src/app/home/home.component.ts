@@ -4,7 +4,6 @@ import { User } from './user.interface';
 import { UserService } from './user.service';
 import { Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from '../auth/authentication.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +16,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public user: User;
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private userService: UserService, private authService: AuthenticationService, private router: Router) {
+  constructor(private userService: UserService, private authService: AuthenticationService) {
     this.user = {
       firstName: '',
       lastName: '',
@@ -27,7 +26,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.userService.getUserData().pipe(takeUntil(this.unsubscribe)).subscribe((data: User) => {
-      console.log("sub, pobieram data", data);
       this.user = data;
     });
   }
@@ -39,6 +37,5 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
   }
 }

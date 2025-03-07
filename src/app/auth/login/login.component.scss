@@ -55,10 +55,20 @@ button[type="submit"] {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #45a049;
+  }
 }
 
-button[type="submit"]:hover {
-  background-color: #45a049;
+button.disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+
+  &:hover {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
 }
 
 .error-message {
