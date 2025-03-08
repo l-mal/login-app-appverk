@@ -33,7 +33,7 @@ export class LoginComponent {
 
   public onSubmit() {
     if (this.loginForm.valid) {
-      const { email, password }: LoginForm = this.loginForm.value
+      const { email, password }: LoginForm = this.loginForm.value;
       this.authService.login(email, password);
     }
   }
