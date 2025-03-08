@@ -14,7 +14,7 @@ import { AuthenticationService } from '../auth/authentication.service';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   public user: User;
-  private unsubscribe: Subject<void> = new Subject();
+  private unsubscribe: Subject<void> = new Subject<void>();
 
   constructor(private userService: UserService, private authService: AuthenticationService) {
     this.user = {
