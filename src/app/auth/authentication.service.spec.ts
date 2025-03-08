@@ -15,14 +15,12 @@ describe('AuthenticationService', () => {
     TestBed.configureTestingModule({
       providers: [
         AuthenticationService,
-        { provide: SessionService, useClass: sessionService },
-        { provide: Router, useClass: router }
+        { provide: SessionService, useValue: sessionService },
+        { provide: Router, useValue: router }
       ]
     });
 
     testObj = TestBed.inject(AuthenticationService);
-    sessionService = TestBed.inject(SessionService as any);
-    router = TestBed.inject(Router as any);
   });
 
   it('should be created', () => {
@@ -30,17 +28,16 @@ describe('AuthenticationService', () => {
   });
 
   it('should save token and navigate to home on successful login', () => {
-    const spySaveToken = spyOn(sessionService, 'saveToken');
-    const spyNavigate = spyOn(router, 'navigate');
+    sessionService.getToken.and.returnValue(null); 
 
     testObj.login('test@example.com', 'password123');
     
-    expect(spySaveToken).toHaveBeenCalled();
-    expect(spyNavigate).toHaveBeenCalledWith(['/home']);
+    expect(sessionService.saveToken).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/home']);
   });
 
   it('should return true if user is authenticated', () => {
-    sessionService.saveToken('validToken');
+    sessionService.getToken.and.returnValue('validToken');
     
     const isAuthenticated = testObj.isAuthenticated();
     
@@ -48,7 +45,7 @@ describe('AuthenticationService', () => {
   });
 
   it('should return false if user is not authenticated', () => {
-    sessionService.removeToken();
+    sessionService.getToken.and.returnValue(null);
     
     const isAuthenticated = testObj.isAuthenticated();
     
@@ -56,12 +53,9 @@ describe('AuthenticationService', () => {
   });
 
   it('should remove token and navigate to login on logout', () => {
-    const spyRemoveToken = spyOn(sessionService, 'removeToken');
-    const spyNavigate = spyOn(router, 'navigate');
-
     testObj.logout();
     
-    expect(spyRemoveToken).toHaveBeenCalled();
-    expect(spyNavigate).toHaveBeenCalledWith(['/login']);
+    expect(sessionService.removeToken).toHaveBeenCalled();
+    expect(router.navigate).toHaveBeenCalledWith(['/login']);
   });
 });
